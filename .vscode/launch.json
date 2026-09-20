@@ -1,0 +1,44 @@
+{
+	"configurations": [
+		{
+			"type": "swift",
+			"request": "launch",
+			"args": [],
+			"cwd": "${workspaceFolder:DuoFold}",
+			"name": "Debug lidprobe",
+			"target": "lidprobe",
+			"configuration": "debug",
+			"preLaunchTask": "swift: Build Debug lidprobe"
+		},
+		{
+			"type": "swift",
+			"request": "launch",
+			"args": [],
+			"cwd": "${workspaceFolder:DuoFold}",
+			"name": "Release lidprobe",
+			"target": "lidprobe",
+			"configuration": "release",
+			"preLaunchTask": "swift: Build Release lidprobe"
+		},
+		{
+			"type": "swift",
+			"request": "launch",
+			"args": [],
+			"cwd": "${workspaceFolder:DuoFold}",
+			"name": "Debug DuoFold",
+			"target": "DuoFold",
+			"configuration": "debug",
+			"preLaunchTask": "swift: Build Debug DuoFold"
+		},
+		{
+			"type": "swift",
+			"request": "launch",
+			"args": [],
+			"cwd": "${workspaceFolder:DuoFold}",
+			"name": "Release DuoFold",
+			"target": "DuoFold",
+			"configuration": "release",
+			"preLaunchTask": "swift: Build Release DuoFold"
+		}
+	]
+}

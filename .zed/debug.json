@@ -1,0 +1,34 @@
+[
+  {
+    "label": "Debug lidprobe",
+    "adapter": "Swift",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/.build/debug/lidprobe",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "build": "swift: Build Debug lidprobe"
+  },
+  {
+    "label": "Release lidprobe",
+    "adapter": "Swift",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/.build/release/lidprobe",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "build": "swift: Build Release lidprobe"
+  },
+  {
+    "label": "Debug DuoFold",
+    "adapter": "Swift",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/.build/debug/DuoFold",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "build": "swift: Build Debug DuoFold"
+  },
+  {
+    "label": "Release DuoFold",
+    "adapter": "Swift",
+    "request": "launch",
+    "program": "$ZED_WORKTREE_ROOT/.build/release/DuoFold",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "build": "swift: Build Release DuoFold"
+  }
+]
