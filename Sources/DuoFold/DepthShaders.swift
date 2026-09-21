@@ -35,7 +35,7 @@ enum DepthShaders {
     // for tilt so the desktop appears anchored behind the physical display.
     // Fix the viewer relative to the keyboard, not to each new resting screen.
     static float4 foldGhost(float2 uv, texture2d<float> desktop, texture2d<float> pyramid,
-                            sampler s, constant RefUniforms& u, float p) {
+                            sampler s, thread const RefUniforms& u, float p) {
         float height = 1.0f-uv.y;
         float perspective = clamp(u.perspective,0.0f,1.0f);
         float viewerDistance = mix(2.6f,1.6f,perspective);
@@ -79,7 +79,7 @@ enum DepthShaders {
     // with the angle. Above it the material wraps a cylinder whose radius grows
     // like a spiral roll, so arc length is the inverse map: one asin per pixel.
     static float4 foldRoll(float2 uv, texture2d<float> desktop, texture2d<float> pyramid,
-                           sampler s, constant RefUniforms& u, float p) {
+                           sampler s, thread const RefUniforms& u, float p) {
         float persp = clamp(u.perspective,0.0f,1.0f);
         float soft = clamp(u.blur,0.0f,1.0f);
         float shad = clamp(u.shadow,0.0f,1.0f);
@@ -119,7 +119,7 @@ enum DepthShaders {
     // pixels inside a panel stay rigid. Front to back: the first panel that
     // covers the pixel wins, which is what makes the overlapping rims visible.
     static float4 foldShutter(float2 uv, texture2d<float> desktop, texture2d<float> pyramid,
-                              sampler s, constant RefUniforms& u, float p) {
+                              sampler s, thread const RefUniforms& u, float p) {
         float persp = clamp(u.perspective,0.0f,1.0f);
         float soft = clamp(u.blur,0.0f,1.0f);
         float shad = clamp(u.shadow,0.0f,1.0f);
@@ -161,7 +161,7 @@ enum DepthShaders {
     // tipped-back top edge, and a horizontal cylindrical unwrap (asin) for the
     // inward bow. Everything is one continuous deformation of the same image.
     static float4 foldFlex(float2 uv, texture2d<float> desktop, texture2d<float> pyramid,
-                           sampler s, constant RefUniforms& u, float p) {
+                           sampler s, thread const RefUniforms& u, float p) {
         float persp = clamp(u.perspective,0.0f,1.0f);
         float soft = clamp(u.blur,0.0f,1.0f);
         float shad = clamp(u.shadow,0.0f,1.0f);
@@ -203,7 +203,7 @@ enum DepthShaders {
     // functions, so coverage has no gaps; blade order only decides the shading,
     // which is what draws the overlapping seams. The desktop itself stays put.
     static float4 foldIris(float2 uv, texture2d<float> desktop, texture2d<float> pyramid,
-                           sampler s, constant RefUniforms& u, float p) {
+                           sampler s, thread const RefUniforms& u, float p) {
         float persp = clamp(u.perspective,0.0f,1.0f);
         float soft = clamp(u.blur,0.0f,1.0f);
         float shad = clamp(u.shadow,0.0f,1.0f);
@@ -259,7 +259,7 @@ enum DepthShaders {
     }
 
     static float4 foldEffectPixel(float2 screenUV, texture2d<float> desktop,
-        texture2d<float> pyramid, constant RefUniforms& u) {
+        texture2d<float> pyramid, thread const RefUniforms& u) {
         constexpr sampler s(coord::normalized, address::clamp_to_edge, filter::linear, mip_filter::linear);
         float p = clamp(u.progress,0.0f,1.0f);
         if (p < 0.00001f) return float4(desktop.sample(s,screenUV).rgb,1);
