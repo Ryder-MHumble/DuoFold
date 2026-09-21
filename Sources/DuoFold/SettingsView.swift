@@ -206,10 +206,22 @@ struct SettingsView: View {
 
     private var effectPicker: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Picker(localized("Animation"), selection: $preferences.selectedEffect) {
-                ForEach(DuoFoldEffect.allCases) { effect in
-                    Text(localized(effect.displayNameKey)).tag(effect)
+            HStack(spacing: 8) {
+                Picker(localized("Animation"), selection: $preferences.selectedEffect) {
+                    ForEach(DuoFoldEffect.allCases) { effect in
+                        Text(localized(effect.displayNameKey)).tag(effect)
+                    }
                 }
+                Button {
+                    controller.runPreview()
+                } label: {
+                    Image(systemName: "play.circle")
+                }
+                .buttonStyle(.borderless)
+                .foregroundStyle(.secondary)
+                .help(localized("Preview"))
+                .accessibilityLabel(localized("Preview"))
+                .disabled(!preferences.isEnabled)
             }
             Text(localized(preferences.selectedEffect.descriptionKey))
                 .font(.caption)

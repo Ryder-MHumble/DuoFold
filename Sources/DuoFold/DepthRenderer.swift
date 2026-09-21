@@ -13,7 +13,7 @@ final class DepthRenderer {
 
     /// Black margin around the picture, in points. Stays above the largest
     /// blur radius, so the blur reaches real black on every side.
-    nonisolated private static let paddingInPoints: CGFloat = 0
+    nonisolated private static let paddingInPoints: CGFloat = 120
 
     private struct Uniforms {
         var column0: SIMD4<Float>
@@ -65,6 +65,7 @@ final class DepthRenderer {
     /// frame that arrives first wins, since it is the newer of the two.
     private var pendingSeed: (buffer: MTLBuffer, width: Int, height: Int)?
     private static var hasReportedPyramidFailure = false
+    private var renderCount = 0
     /// Built once, re-encoded every frame.
     private lazy var livePyramid = MPSImageGaussianPyramid(device: device, centerWeight: 0.375)
 
@@ -419,8 +420,19 @@ final class DepthRenderer {
         absorbPending(into: commands)
         guard let texture, screenSize.width > 0, screenSize.height > 0,
               let drawable = layer.nextDrawable() else {
+            if renderCount == 0 {
+                Diagnostics.geometry.error(
+                    "render skipped: texture \(self.texture != nil, privacy: .public) screen \(self.screenSize.width, privacy: .public)x\(self.screenSize.height, privacy: .public) drawable \(self.layer.drawableSize.width, privacy: .public)x\(self.layer.drawableSize.height, privacy: .public)"
+                )
+            }
             commands.commit()
             return
+        }
+        renderCount += 1
+        if renderCount == 1 {
+            Diagnostics.geometry.notice(
+                "render first frame drawable \(drawable.texture.width)x\(drawable.texture.height) progress \(progress, format: .fixed(precision: 3))"
+            )
         }
 
         let forward = Homography.matrix(
@@ -468,6 +480,12 @@ final class DepthRenderer {
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
         encoder.endEncoding()
         commands.present(drawable)
+        commands.addCompletedHandler { commandBuffer in
+            guard commandBuffer.status == .error else { return }
+            Diagnostics.geometry.error(
+                "render command failed: \(String(describing: commandBuffer.error), privacy: .public)"
+            )
+        }
         commands.commit()
     }
 }

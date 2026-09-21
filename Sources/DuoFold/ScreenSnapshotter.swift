@@ -37,6 +37,57 @@ final class ScreenSnapshotter {
 
     var hasPermission: Bool { CGPreflightScreenCaptureAccess() }
 
+    /// Creates a neutral local image for Replay mode. It keeps the animation
+    /// testable when Screen Recording is unavailable without pretending to be
+    /// the user's desktop.
+    static func makeReplayImage(for screen: NSScreen) -> CGImage? {
+        let scale = min(max(screen.backingScaleFactor, 1), 2)
+        let width = max(Int((screen.frame.width * scale).rounded()), 640)
+        let height = max(Int((screen.frame.height * scale).rounded()), 420)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: width * 4,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return nil }
+
+        let colors = [
+            CGColor(red: 0.08, green: 0.10, blue: 0.18, alpha: 1),
+            CGColor(red: 0.22, green: 0.12, blue: 0.36, alpha: 1),
+            CGColor(red: 0.04, green: 0.28, blue: 0.38, alpha: 1),
+        ] as CFArray
+        guard let gradient = CGGradient(
+            colorsSpace: colorSpace,
+            colors: colors,
+            locations: [0, 0.55, 1]
+        ) else { return nil }
+        context.drawLinearGradient(
+            gradient,
+            start: CGPoint(x: 0, y: 0),
+            end: CGPoint(x: CGFloat(width), y: CGFloat(height)),
+            options: []
+        )
+
+        context.setLineWidth(max(1, CGFloat(width) / 900))
+        context.setStrokeColor(CGColor(red: 1, green: 1, blue: 1, alpha: 0.08))
+        let step = max(CGFloat(width) / 12, 48)
+        for x in stride(from: 0, through: CGFloat(width), by: step) {
+            context.move(to: CGPoint(x: x, y: 0))
+            context.addLine(to: CGPoint(x: x, y: CGFloat(height)))
+        }
+        for y in stride(from: 0, through: CGFloat(height), by: step) {
+            context.move(to: CGPoint(x: 0, y: y))
+            context.addLine(to: CGPoint(x: CGFloat(width), y: y))
+        }
+        context.strokePath()
+
+        return context.makeImage()
+    }
+
     func beginPrewarm(interval: TimeInterval = 0.2) {
         guard timer == nil else { return }
         capture()

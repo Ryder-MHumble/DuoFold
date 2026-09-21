@@ -51,6 +51,7 @@
 "Effect.replay.name" = "Replay";
 "Effect.replay.description" = "A scripted preview for trying effects without moving the lid.";
 "Effect" = "Effect";
+"Preview" = "Preview";
 "Animation" = "Animation";
 "Behavior" = "Behavior";
 "Appearance" = "Appearance";

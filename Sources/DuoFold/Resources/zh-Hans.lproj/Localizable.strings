@@ -51,6 +51,7 @@
 "Effect.replay.name" = "演示";
 "Effect.replay.description" = "无需移动屏幕即可体验动画的脚本预览。";
 "Effect" = "效果";
+"Preview" = "预览";
 "Animation" = "动画";
 "Behavior" = "行为";
 "Appearance" = "外观";

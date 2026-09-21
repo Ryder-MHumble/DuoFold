@@ -520,6 +520,13 @@ final class LidController: ObservableObject {
     /// already running counts as that wait.
     private func presentPicture() {
         guard preferences.isEnabled, !isSuspended, isActive else { return }
+        if preferences.selectedEffect == .replay,
+           let screen = NSScreen.builtIn,
+           let image = ScreenSnapshotter.makeReplayImage(for: screen) {
+            Diagnostics.lid.notice("present: replay generated frame")
+            show(image: image, on: screen)
+            return
+        }
         if preferences.isLivePicture, let screen = NSScreen.builtIn,
            overlay.showLive(
                on: screen,
