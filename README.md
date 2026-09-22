@@ -1,8 +1,8 @@
 <div align="center">
 
-<video src="https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/demo.mp4" controls muted loop playsinline width="100%" aria-label="DuoFold 产品演示视频"></video>
+<a href="https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/demo.mp4"><img src="docs/duofold-demo.gif" alt="DuoFold 产品演示视频，点击播放 MP4" width="100%"></a>
 
-<p><a href="https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/demo.mp4">播放或下载演示视频</a></p>
+<p><a href="https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/demo.mp4">播放或下载完整演示视频（MP4）</a></p>
 
 # DuoFold
 
