@@ -1,6 +1,8 @@
 <div align="center">
 
-<img src="docs/duofold-banner.png" alt="DuoFold MacBook fold animation" width="100%">
+<video src="demo.mp4" controls muted loop playsinline width="100%" aria-label="DuoFold 产品演示视频"></video>
+
+<p><a href="demo.mp4">播放或下载演示视频</a></p>
 
 # DuoFold
 
