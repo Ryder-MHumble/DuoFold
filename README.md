@@ -10,6 +10,8 @@
 
 <p>macOS 14+ · 原生体验 · 本地运行 · 无账号</p>
 
+[![下载 DuoFold](https://img.shields.io/badge/下载-DuoFold%200.1.0-ff8a3d?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/DuoFold-0.1.0.dmg)
+
 </div>
 
 ## 为什么是 DuoFold
@@ -41,6 +43,12 @@
 DuoFold 只支持带有连续合盖角度传感器的 MacBook。没有传感器的设备仍可以使用预览模式查看动画。
 
 ## 安装
+
+### 一键安装
+
+点击上方 **下载 DuoFold** 按钮，或直接下载 [DuoFold-0.1.0.dmg](https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/DuoFold-0.1.0.dmg)。打开 DMG 后，把 DuoFold 拖到 `Applications` 文件夹，再从“应用程序”启动。
+
+首次启动时，在“系统设置 → 隐私与安全性 → 屏幕与系统音频录制”中允许 DuoFold，然后重新打开应用。
 
 从源码构建需要 macOS 14+、Xcode 和 Swift 6：
 
