@@ -1,8 +1,8 @@
 <div align="center">
 
-<video src="demo.mp4" controls muted loop playsinline width="100%" aria-label="DuoFold 产品演示视频"></video>
+<video src="https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/demo.mp4" controls muted loop playsinline width="100%" aria-label="DuoFold 产品演示视频"></video>
 
-<p><a href="demo.mp4">播放或下载演示视频</a></p>
+<p><a href="https://github.com/Ryder-MHumble/DuoFold/releases/download/v0.1.0/demo.mp4">播放或下载演示视频</a></p>
 
 # DuoFold
 
