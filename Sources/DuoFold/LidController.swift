@@ -229,18 +229,6 @@ final class LidController: ObservableObject {
         setPollInterval(Self.activePollInterval)
     }
 
-    /// Called by the optional camera attention monitor. The existing preview
-    /// path gives the mode a visible, reversible response without capturing
-    /// or storing camera frames.
-    func handleAttentionState(facing: Bool) {
-        guard preferences.attentionModeEnabled else { return }
-        if facing {
-            if isActive { beginClosingOut() }
-        } else if !isActive {
-            runPreview()
-        }
-    }
-
     // MARK: - Polling
 
     private func setPollInterval(_ interval: TimeInterval) {

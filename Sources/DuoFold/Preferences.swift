@@ -20,14 +20,12 @@ final class Preferences: ObservableObject {
         static let showsAngleInMenuBar = "showsAngleInMenuBar"
         static let isLivePicture = "isLivePicture"
         static let selectedEffect = "selectedEffect"
-        static let attentionModeEnabled = "attentionModeEnabled"
 
         static let all = [
             isEnabled, isTimeoutEnabled, thresholdAngle, blurSpan, maxBlurRadius,
             maxDim, viewingDistance, recession, blurEvenness, dimReach,
             showsAngleInMenuBar, isLivePicture,
             selectedEffect,
-            attentionModeEnabled,
         ]
     }
 
@@ -45,7 +43,6 @@ final class Preferences: ObservableObject {
         Key.showsAngleInMenuBar: false,
         Key.isLivePicture: true,
         Key.selectedEffect: DuoFoldEffect.duo.rawValue,
-        Key.attentionModeEnabled: false,
     ]
 
     /// Master switch for the depth effect.
@@ -118,9 +115,6 @@ final class Preferences: ObservableObject {
         didSet { defaults.set(selectedEffect.rawValue, forKey: Key.selectedEffect) }
     }
 
-    @Published var attentionModeEnabled: Bool {
-        didSet { defaults.set(attentionModeEnabled, forKey: Key.attentionModeEnabled) }
-    }
 
     /// Eye distance in screen heights, at the two ends of the perspective
     /// slider. The panel offers the strength, which runs the other way.
@@ -169,7 +163,6 @@ final class Preferences: ObservableObject {
         showsAngleInMenuBar = defaults.bool(forKey: Key.showsAngleInMenuBar)
         isLivePicture = defaults.bool(forKey: Key.isLivePicture)
         selectedEffect = DuoFoldEffect(rawValue: defaults.string(forKey: Key.selectedEffect) ?? DuoFoldEffect.duo.rawValue) ?? .duo
-        attentionModeEnabled = defaults.bool(forKey: Key.attentionModeEnabled)
     }
 
     func resetToDefaults() {
@@ -189,6 +182,5 @@ final class Preferences: ObservableObject {
         showsAngleInMenuBar = defaults.bool(forKey: Key.showsAngleInMenuBar)
         isLivePicture = defaults.bool(forKey: Key.isLivePicture)
         selectedEffect = DuoFoldEffect(rawValue: defaults.string(forKey: Key.selectedEffect) ?? DuoFoldEffect.duo.rawValue) ?? .duo
-        attentionModeEnabled = defaults.bool(forKey: Key.attentionModeEnabled)
     }
 }

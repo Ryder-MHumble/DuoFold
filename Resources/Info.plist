@@ -43,7 +43,5 @@
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright 2026 DuoFold contributors</string>
-	<key>NSCameraUsageDescription</key>
-	<string>DuoFold uses the camera locally to detect whether you are facing the screen.</string>
 </dict>
 </plist>

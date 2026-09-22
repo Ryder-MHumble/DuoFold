@@ -1,5 +1,4 @@
 import AppKit
-import AVFoundation
 import ServiceManagement
 import SwiftUI
 
@@ -20,7 +19,6 @@ struct SettingsView: View {
 
     @State private var launchesAtLogin = SMAppService.mainApp.status == .enabled
     @State private var hasScreenPermission = CGPreflightScreenCaptureAccess()
-    @State private var hasCameraPermission = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     @State private var settingsOpenFailed = false
     @State private var advancedBehaviorExpanded = false
     @State private var advancedAppearanceExpanded = false
@@ -47,20 +45,8 @@ struct SettingsView: View {
                         Toggle(localized("Live rendering"), isOn: $preferences.isLivePicture)
                             .disabled(!preferences.isEnabled)
                         effectPicker
-                        Toggle(localized("Attention mode"), isOn: $preferences.attentionModeEnabled)
-                            .onChange(of: preferences.attentionModeEnabled) { _, enabled in
-                                if enabled {
-                                    hasCameraPermission = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
-                                }
-                            }
                     } header: {
                         Text(localized("Effect"))
-                    }
-
-                    if preferences.attentionModeEnabled && !hasCameraPermission {
-                        Section {
-                            cameraPermissionNotice
-                        }
                     }
 
                     if !hasScreenPermission {
@@ -170,11 +156,9 @@ struct SettingsView: View {
         .frame(width: Self.width)
         .onAppear {
             hasScreenPermission = CGPreflightScreenCaptureAccess()
-            hasCameraPermission = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             hasScreenPermission = CGPreflightScreenCaptureAccess()
-            hasCameraPermission = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         }
     }
 
@@ -326,23 +310,6 @@ struct SettingsView: View {
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 8))
-    }
-
-    private var cameraPermissionNotice: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(localized("Camera permission is required for Attention mode."))
-                .font(.caption)
-            Text(localized("DuoFold only analyzes face direction locally and never saves camera frames."))
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-            Button(localized("Open Camera Settings")) {
-                let url = URL(string: "x-apple.systempreferences:com.apple.settings.PrivacySecurity.extension?Privacy_Camera")!
-                NSWorkspace.shared.open(url)
-            }
-            .buttonStyle(.bordered)
-            .controlSize(.small)
-        }
-        .padding(.vertical, 4)
     }
 
     private func openScreenRecordingSettings() {
